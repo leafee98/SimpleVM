@@ -22,60 +22,26 @@ enum ins {
      HALT   = 0X00
 };
 
-const std::string _push = "PUSH";
-const std::string _dup  = "DUP";
-const std::string _pop  = "POP";
 
-const std::string _add  = "ADD";
-const std::string _sub  = "SUB";
-const std::string _multi = "MULTI";
-const std::string _div  = "DIV";
-const std::string _mod  = "MOD";
+extern std::map<std::string, uint8_t> insmap;
+extern std::set<std::string> ins_no_opnum;
+extern std::set<std::string> ins_single_opnum;
 
-const std::string _if   = "IF";
-const std::string _ifno = "IFNO";
+void init_opnum();
+void init_insmap();
 
-const std::string _nop  = "NOP";
-const std::string _halt = "HALT";
+extern const std::string _push;
+extern const std::string _dup;
+extern const std::string _pop;
 
-std::map<std::string, uint8_t> insmap;
+extern const std::string _add;
+extern const std::string _sub;
+extern const std::string _multi;
+extern const std::string _div;
+extern const std::string _mod;
 
-// call this function before use opmap
-void init_insmap() {
-    insmap[_push ] = PUSH;
-    insmap[_dup  ] = DUP;
-    insmap[_pop  ] = POP;
+extern const std::string _if;
+extern const std::string _ifno;
 
-    insmap[_add  ] = ADD;
-    insmap[_sub  ] = SUB;
-    insmap[_multi] = MULTI;
-    insmap[_div  ] = DIV;
-    insmap[_mod  ] = MOD;
-
-    insmap[_if   ] = IF;
-    insmap[_ifno ] = IFNO;
-
-    insmap[_nop  ] = NOP;
-    insmap[_halt ] = HALT;
-}
-
-std::set<std::string> ins_no_opnum;
-std::set<std::string> ins_single_opnum;
-
-void init_opnum() {
-     ins_single_opnum.emplace(_push);
-     ins_no_opnum.emplace(_dup);
-     ins_no_opnum.emplace(_pop);
-
-     ins_no_opnum.emplace(_add);
-     ins_no_opnum.emplace(_sub);
-     ins_no_opnum.emplace(_multi);
-     ins_no_opnum.emplace(_div);
-     ins_no_opnum.emplace(_mod);
-
-     ins_single_opnum.emplace(_if);
-     ins_single_opnum.emplace(_ifno);
-
-     ins_no_opnum.emplace(_nop);
-     ins_no_opnum.emplace(_halt);
-}
+extern const std::string _nop;
+extern const std::string _halt;

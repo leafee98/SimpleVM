@@ -9,7 +9,7 @@ help :
 	@echo "    runner"
 
 compiler :
-	$(CC) $(STD) -I $(INCLUDE_PATH) src/compiler/main.cpp -o $(OUT_PATH)/compiler.out
+	$(CC) $(STD) -I $(INCLUDE_PATH) src/share/bitdef.cpp src/compiler/main.cpp -o $(OUT_PATH)/compiler.out
 
 runner :
-	$(CC) $(STD) -I $(INCLUDE_PATH) src/runner/main.cpp -o $(OUT_PATH)/runner.out
+	$(CC) $(STD) -I $(INCLUDE_PATH) src/share/bitdef.cpp src/runner/main.cpp src/runner/func.cpp -o $(OUT_PATH)/runner.out
