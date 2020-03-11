@@ -2,11 +2,9 @@
 
 Standard of language.
 
-Each `<num>` and `<offset>` hold **4** bytes and **is signed**.
+Each `<num>` hold **4** bytes and is **signed** and use **little endian**.
 
-The `<num>` use little endian.
-
-The `<offset>` is relative to the value of `PC` right now.
+There are to registers `A`, `B` and `C` to use.
 
 One statement must takes one line, redudant spaces and blank lines will be ignored. Lower statement is allowed.
 
@@ -15,10 +13,27 @@ Comment must be on its own line, and start with `#`.
 ## operation
 
 ```
+// system operation
+NOP
+HALT
+
+// register operation
+REGA
+REGB
+REGC
+LOADA
+LOADB
+LOADC
+
 // stack operation
+READ
 PUSH <num>
 DUP
 POP
+
+// logic operation
+IF <identifier>
+IFNO <identifier>
 
 // arithmetic operation
 ADD
@@ -26,85 +41,87 @@ SUB
 MULTI
 DIV
 MOD
-
-// logic operation
-IF <offset>
-IFNO <offset>
-
-// system operation
-NOP
-HALT
 ```
 
 ## bit defination
 
-### stack operation
-
-**PUSH** push `<num>` to stack.
-
-**DUP** duplicate the top of stack.
-
-**POP** remove the value on the top of stack.
-
-```
-PUSH  => 0x05
-DUP   => 0X06
-POP   => 0x07
-```
-
-```
-PUSH 3      => 0000: 05 00 00 00 03
-POP         => 0000: 06
-```
-
-### arithmetic operation
-
-The arithmetic operation **has no operation number**. While being used, it will pop two variable on the top of stack, calculate them and push result back to stack. For example:
-
-```
-stack                         stack
-before:   operation: DIV      after:
-  2       expression: 4 / 2      
-  4                            2
-  1                            1 
- ---                          ---
-```
-
-```
-ADD     => 0x09
-SUB     => 0x0A
-MULTI   => 0x0B
-DIV     => 0x0C
-MOD     => 0x0D
-```
-
-### logic operation
-
-Logic operation wile **pop stack after judge**, it will apply `<offset>` to PC if the top is (not) zero.
-
-**The `<offset>` will be applied to PC and PC will not increase one automatically** if judge result is `true`. Else this instruction will be ignored and PC go to next instruction.
-
-`IF` add the `<offset>` to PC if the top of stack **equal to zero**.
-
-`IFNO` add the `<offset>` to PC if the top of stack **not equal to zero**.
-
-```
-IF      => 0x11
-IFNO    => 0x10
-```
-
-```
-IF 16       => 0000: 11 00 00 00 10
-IFNO 32     => 0000: 10 00 00 00 20
-```
-
 ### system operation
 
-`NOP` just do nothing.
-
-`HALT` shutdown the program.
+- `NOP` just do nothing, can be used as `<identifier>`.
+- `HALT` shutdown the program, and print the content in the stack.
 
 ```
 NOP     => 0x01
 HALT    => 0X00
+```
+
+### register operation
+
+There are three register, the first two register will be use by arithmetic, the third can be use by programmer as he/she like.
+
+- `REGA` / `REGB` / `REGC` register the value on top of stack to register **A** / **B** / **C** and pop it.
+- `LOADA` /`LOADB` /`LOADC` load the value in register **A** / **B** / **C** to stack
+
+```
+REGA  => 0x10
+REGB  => 0x11
+REGC  => 0x12
+
+LOADA => 0X14
+LOADB => 0X15
+LOADC => 0X16
+```
+
+### stack operation
+
+- `READ` read a **signed integer** from standard input and push it to stack.
+- `PUSH` push `<num>` to stack.
+- `DUP` duplicate the top of stack.
+- `POP` remove the value on the top of stack.
+
+```
+READ  => 0X24
+PUSH  => 0x25
+DUP   => 0X26
+POP   => 0x27
+```
+
+```
+READ        => 0000: 24
+PUSH 3      => 0000: 25 00 00 00 03
+DUP         => 0000: 26
+POP         => 0000: 27
+```
+
+### logic operation
+
+`<identifier>` is the declared like `:[a-zA-Z_][a-zA-Z0-9_]*`
+
+- `IF` jump to `<identifier>` if the top of stack **equal to zero**.
+- `IF` jump to `<identifier>` if the top of stack **not equal to zero**.
+
+```
+IF      => 0x31
+IFNO    => 0x30
+```
+
+```
+ident:
+...
+
+# suppose the ident's offset of program is 0x12345678
+IF ident        => 0000: 31 12 34 56 78
+IFNO ident      => 0000: 30 12 34 56 78
+```
+
+### arithmetic operation
+
+Calculate with two values in registers and **push result to stack**. Suppose the value in register **A** is `a`, and **B** is `b`, the operatation will like `a <op> b`.
+
+```
+ADD     => 0x40
+SUB     => 0x41
+MULTI   => 0x42
+DIV     => 0x43
+MOD     => 0x44
 ```

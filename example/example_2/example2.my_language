@@ -1,0 +1,21 @@
+# this program is used to calculate GCD
+PUSH 78
+PUSH 42
+
+REGB
+REGA
+MOD
+DUP
+
+:rec
+POP
+REGC
+LOADB
+LOADC
+
+REGB
+REGA
+MOD
+
+DUP
+IFNO rec

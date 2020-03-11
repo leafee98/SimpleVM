@@ -1,47 +1,89 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <map>
 #include <set>
 
-enum ins {
-     PUSH   = 0x05,
-     DUP    = 0x06,
-     POP    = 0x07,
+namespace share {
+    void init();
 
-     ADD    = 0X09,
-     SUB    = 0X0a,
-     MULTI  = 0X0b,
-     DIV    = 0X0c,
-     MOD    = 0x0d,
+    class enum_bit {
+        public:
+            static const uint8_t NOP       ;
+            static const uint8_t HALT      ;
 
-     IF     = 0X11,
-     IFNO   = 0X10,
+            static const uint8_t REGA      ;
+            static const uint8_t REGB      ;
+            static const uint8_t REGC      ;
 
-     NOP    = 0X01,
-     HALT   = 0X00
-};
+            static const uint8_t LOADA     ;
+            static const uint8_t LOADB     ;
+            static const uint8_t LOADC     ;
 
+            static const uint8_t READ      ;
+            static const uint8_t PUSH      ;
+            static const uint8_t DUP       ;
+            static const uint8_t POP       ;
 
-extern std::map<std::string, uint8_t> insmap;
-extern std::set<std::string> ins_no_opnum;
-extern std::set<std::string> ins_single_opnum;
+            static const uint8_t IF        ;
+            static const uint8_t IFNO      ;
 
-void init_opnum();
-void init_insmap();
+            static const uint8_t ADD       ;
+            static const uint8_t SUB       ;
+            static const uint8_t MULTI     ;
+            static const uint8_t DIV       ;
+            static const uint8_t MOD       ;
 
-extern const std::string _push;
-extern const std::string _dup;
-extern const std::string _pop;
+            // static void init();
+    };
 
-extern const std::string _add;
-extern const std::string _sub;
-extern const std::string _multi;
-extern const std::string _div;
-extern const std::string _mod;
+    class enum_opname {
+        public:
+            static const std::string NOP;
+            static const std::string HALT;
 
-extern const std::string _if;
-extern const std::string _ifno;
+            static const std::string REGA;
+            static const std::string REGB;
+            static const std::string REGC;
 
-extern const std::string _nop;
-extern const std::string _halt;
+            static const std::string LOADA;
+            static const std::string LOADB;
+            static const std::string LOADC;
+
+            static const std::string READ;
+            static const std::string PUSH;
+            static const std::string DUP;
+            static const std::string POP;
+
+            static const std::string IF;
+            static const std::string IFNO;
+
+            static const std::string ADD;
+            static const std::string SUB;
+            static const std::string MULTI;
+            static const std::string DIV;
+            static const std::string MOD;  
+
+            // static void init();
+    };
+
+    class bitdef {
+        private:
+            static std::map<std::string, uint8_t> bit;
+            static std::map<uint8_t, std::string> opname;
+            static std::set<std::string> noparam_op;
+            static std::set<std::string> oneparam_op;
+
+        public:
+            static void init();
+            static uint8_t getbit(const std::string & opname);
+            static std::string getopname(uint8_t bit);
+
+            // return 0 if not a valid operation,
+            // 1 if without any parameter,
+            // 2 if a digit parameter is required.
+            // 3 if a identifier parameter is required.
+            static int validate_opname(const std::string & opname);
+    };
+}

@@ -1,15 +1,22 @@
-CC="g++"
-STD="-std=c++17"
-OUT_PATH="out"
-INCLUDE_PATH="src"
+COMPILE_COMMAND=g++ -std=c++17 -Isrc
+
+COMPILER_FILE=\
+src/share/bitdef.cpp\
+src/compiler/func.cpp\
+src/compiler/main.cpp
+
+RUNNER_FILE=\
+src/share/bitdef.cpp\
+src/runner/func.cpp\
+src/runner/main.cpp
 
 help :
 	@echo "available targets: "
 	@echo "    compiler"
 	@echo "    runner"
 
-compiler :
-	$(CC) $(STD) -I $(INCLUDE_PATH) src/share/bitdef.cpp src/compiler/main.cpp -o $(OUT_PATH)/compiler.out
+compiler : out/compiler/compiler
+	$(COMPILE_COMMAND) $(COMPILER_FILE) -o $(OUT_PATH)/compiler
 
 runner :
-	$(CC) $(STD) -I $(INCLUDE_PATH) src/share/bitdef.cpp src/runner/main.cpp src/runner/func.cpp -o $(OUT_PATH)/runner.out
+	$(COMPILE_COMMAND) $(RUNNER_FILE) -o $(OUT_PATH)/runner.out
