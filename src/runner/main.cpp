@@ -7,23 +7,26 @@
 
 int main(int argc, char * args[]) {
     if (! apply_parameter(argc, args)) {
+        std::cout << "invalid parameter or duplicated parameter.\n";
         show_usage();
         return EXIT_FAILURE;
     }
 
+    if (runf & run_flag::help) {
+        show_usage();
+        return EXIT_SUCCESS;
+    }
+
     long filesize = get_filesize(run_param::byte_code_file);
-    program_block.reserve(filesize);
-    std::ifstream program_file(run_param::byte_code_file, std::ios::in | std::ios::binary);
-    program_file.read((char*)program_block.data(), filesize);
+    sys::ins_seg.reserve(filesize);
+    std::ifstream program_file(run_param::byte_code_file,
+            std::ios::in | std::ios::binary);
+    program_file.read((char*)sys::ins_seg.data(), filesize);
 
     std::string error_msg;
-    bool run = true;
-    while (run) {
-        uint8_t instruction = (uint8_t)*(program_block.data() + program_counter);
-        run = run_instruction(instruction, error_msg);
-    }
-    std::cerr << "running result / error reason:\n" << error_msg << '\n';
+    run(error_msg);
+    std::cerr << "running result / error reason:\n  " << error_msg << '\n';
 
-    display_stack();
+    show_status();
     return EXIT_SUCCESS;
 }

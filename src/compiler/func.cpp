@@ -101,8 +101,9 @@ namespace compiler {
 
     bool compile(std::string source_file, std::string target_file,
             const std::vector<int> & line_tags, std::string & err_msg) {
+        // id's name, where it is.
         std::map<std::string, uint32_t> identifiers;
-        // where it's required, id's name
+        // where it's required, id's name.
         std::map<uint32_t, std::string> ident_tofill; 
         uint32_t program_offset = 0;
 
@@ -191,7 +192,6 @@ namespace compiler {
         }
 
         for (auto x : ident_tofill) {
-            std::cout << "Filling the identifier: " << x.second << '(' << x.first << ')' << std::endl;
             if (identifiers.count(x.second) <= 0) {
                 err_msg = "no such identifier: " + x.second;
                 fin.close(), fout.close();
@@ -250,9 +250,9 @@ namespace compiler {
             ins_str = bitdef::getopname(ins_bit);
             int validate_result = bitdef::validate_opname(ins_str);
 
-            // if there is a identifier, write it to source file.
+            // if there is an identifier, write it to source file.
             if (pos_ident.count(pro_cnt) > 0) {
-                lines.emplace_back(pos_ident[pro_cnt] + '\n');
+                lines.emplace_back(':' + pos_ident[pro_cnt] + '\n');
                 pro_cnt += 1;
                 continue;
             }

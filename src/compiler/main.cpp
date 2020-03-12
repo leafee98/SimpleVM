@@ -39,7 +39,7 @@ bool apply_param(int argc, char * args[]) {
     return true;
 }
 
-void display_help() {
+void show_usage() {
     std::cout <<
             "compiler [-d] [-s] <source file> [-t] <target file>\n"
             "\n"
@@ -54,11 +54,12 @@ int main(int argc, char * args[]) {
 
     if (! apply_param(argc, args)) {
         std::cout << "invalid parameter or duplicated parameter.\n";
+        show_usage();
         return EXIT_FAILURE;
     }
 
     if (params::help) {
-        display_help();
+        show_usage();
         return EXIT_SUCCESS;
     }
 

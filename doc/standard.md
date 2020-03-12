@@ -32,6 +32,7 @@ DUP
 POP
 
 // logic operation
+JMP
 IF <identifier>
 IFNO <identifier>
 
@@ -59,8 +60,8 @@ HALT    => 0X00
 
 There are three register, the first two register will be use by arithmetic, the third can be use by programmer as he/she like.
 
-- `REGA` / `REGB` / `REGC` register the value on top of stack to register **A** / **B** / **C** and pop it.
-- `LOADA` /`LOADB` /`LOADC` load the value in register **A** / **B** / **C** to stack
+- `REGA` / `REGB` / `REGC` register the value on top of stack to register **A** / **B** / **C** and **pop it**.
+- `LOADA` /`LOADB` /`LOADC` load the value in register **A** / **B** / **C** to stack, the value in register will **remain**.
 
 ```
 REGA  => 0x10
@@ -88,7 +89,7 @@ POP   => 0x27
 
 ```
 READ        => 0000: 24
-PUSH 3      => 0000: 25 00 00 00 03
+PUSH 3      => 0000: 25 03 00 00 00
 DUP         => 0000: 26
 POP         => 0000: 27
 ```
@@ -97,21 +98,26 @@ POP         => 0000: 27
 
 `<identifier>` is the declared like `:[a-zA-Z_][a-zA-Z0-9_]*`
 
+**The stack will be popped after judge.**
+
+- `JMP` jump to `<identifier>`.
 - `IF` jump to `<identifier>` if the top of stack **equal to zero**.
 - `IF` jump to `<identifier>` if the top of stack **not equal to zero**.
 
 ```
+JMP     => 0x30
 IF      => 0x31
-IFNO    => 0x30
+IFNO    => 0x32
 ```
 
 ```
 ident:
 ...
 
-# suppose the ident's offset of program is 0x12345678
+# suppose the ident's offset of program is 0x78563412
+JMP             => 0000: 30 12 34 56 78
 IF ident        => 0000: 31 12 34 56 78
-IFNO ident      => 0000: 30 12 34 56 78
+IFNO ident      => 0000: 32 12 34 56 78
 ```
 
 ### arithmetic operation

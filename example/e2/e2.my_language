@@ -1,0 +1,19 @@
+# this program is used to calculate GCD
+
+read
+read
+
+:iterate
+
+REGA
+REGB
+MOD
+
+DUP
+IF end
+
+LOADB
+JMP iterate
+
+:end
+HALT

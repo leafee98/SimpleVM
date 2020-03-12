@@ -1,0 +1,12 @@
+READ
+READ
+:indentifier_1
+REGA
+REGB
+MOD
+DUP
+IF indentifier_2
+LOADB
+JMP indentifier_1
+:indentifier_2
+HALT

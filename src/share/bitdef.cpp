@@ -7,114 +7,6 @@ namespace share {
         bitdef::init();
     }
 
-    // void enum_bit::init() {
-        const uint8_t enum_bit::NOP       = 0x01;
-        const uint8_t enum_bit::HALT      = 0x00;
-
-        const uint8_t enum_bit::REGA      = 0x10;
-        const uint8_t enum_bit::REGB      = 0x11;
-        const uint8_t enum_bit::REGC      = 0x12;
-
-        const uint8_t enum_bit::LOADA     = 0x14;
-        const uint8_t enum_bit::LOADB     = 0x15;
-        const uint8_t enum_bit::LOADC     = 0x16;
-
-        const uint8_t enum_bit::READ      = 0x24;
-        const uint8_t enum_bit::PUSH      = 0x25;
-        const uint8_t enum_bit::DUP       = 0x26;
-        const uint8_t enum_bit::POP       = 0x27;
-
-        const uint8_t enum_bit::IF        = 0x31;
-        const uint8_t enum_bit::IFNO      = 0x30;
-
-        const uint8_t enum_bit::ADD       = 0x40;
-        const uint8_t enum_bit::SUB       = 0x41;
-        const uint8_t enum_bit::MULTI     = 0x42;
-        const uint8_t enum_bit::DIV       = 0x43;
-        const uint8_t enum_bit::MOD       = 0x44;
-    // };
-
-    // struct enum_opname {
-    //     static const std::string NOP;
-    //     static const std::string HALT;
-
-    //     static const std::string REGA;
-    //     static const std::string REGB;
-    //     static const std::string REGC;
-
-    //     static const std::string LOADA;
-    //     static const std::string LOADB;
-    //     static const std::string LOADC;
-
-    //     static const std::string READ;
-    //     static const std::string PUSH;
-    //     static const std::string DUP;
-    //     static const std::string POP;
-
-    //     static const std::string IF;
-    //     static const std::string IFNO;
-
-    //     static const std::string ADD;
-    //     static const std::string SUB;
-    //     static const std::string MULTI;
-    //     static const std::string DIV;
-    //     static const std::string MOD;  
-    // };
-
-    // void enum_opname::init() {
-        const std::string enum_opname::NOP       = "NOP";
-        const std::string enum_opname::HALT      = "HALT";
-
-        const std::string enum_opname::REGA      = "REGA";
-        const std::string enum_opname::REGB      = "REGB";
-        const std::string enum_opname::REGC      = "REGC";
-
-        const std::string enum_opname::LOADA     = "LOADA";
-        const std::string enum_opname::LOADB     = "LOADB";
-        const std::string enum_opname::LOADC     = "LOADC";
-
-        const std::string enum_opname::READ      = "READ";
-        const std::string enum_opname::PUSH      = "PUSH";
-        const std::string enum_opname::DUP       = "DUP";
-        const std::string enum_opname::POP       = "POP";
-
-        const std::string enum_opname::IF        = "IF";
-        const std::string enum_opname::IFNO      = "IFNO";
-
-        const std::string enum_opname::ADD       = "ADD";
-        const std::string enum_opname::SUB       = "SUB";
-        const std::string enum_opname::MULTI     = "MULTI";
-        const std::string enum_opname::DIV       = "DIV";
-        const std::string enum_opname::MOD       = "MOD";
-    // }
-
-    // const std::string enum_opname::NOP       = "NOP";
-    // const std::string enum_opname::HALT      = "HALT";
-
-    // const std::string enum_opname::REGA      = "REGA";
-    // const std::string enum_opname::REGB      = "REGB";
-    // const std::string enum_opname::REGC      = "REGC";
-
-    // const std::string enum_opname::LOADA     = "LOADA";
-    // const std::string enum_opname::LOADB     = "LOADB";
-    // const std::string enum_opname::LOADC     = "LOADC";
-
-    // const std::string enum_opname::READ      = "READ";
-    // const std::string enum_opname::PUSH      = "PUSH";
-    // const std::string enum_opname::DUP       = "DUP";
-    // const std::string enum_opname::POP       = "POP";
-
-    // const std::string enum_opname::IF        = "IF";
-    // const std::string enum_opname::IFNO      = "IFNO";
-
-    // const std::string enum_opname::ADD       = "ADD";
-    // const std::string enum_opname::SUB       = "SUB";
-    // const std::string enum_opname::MULTI     = "MULTI";
-    // const std::string enum_opname::DIV       = "DIV";
-    // const std::string enum_opname::MOD       = "MOD";
-
-
-
     std::map<std::string, uint8_t> bitdef::bit;
     std::map<uint8_t, std::string> bitdef::opname;
     std::set<std::string> bitdef::noparam_op;
@@ -137,6 +29,7 @@ namespace share {
         bit[enum_opname::DUP]   = enum_bit::DUP;
         bit[enum_opname::POP]   = enum_bit::POP;
 
+        bit[enum_opname::JMP]   = enum_bit::JMP;
         bit[enum_opname::IF]    = enum_bit::IF;
         bit[enum_opname::IFNO ] = enum_bit::IFNO;
 
@@ -162,6 +55,7 @@ namespace share {
         noparam_op.insert(enum_opname::DUP);
         noparam_op.insert(enum_opname::POP);
 
+        oneparam_op.insert(enum_opname::JMP);
         oneparam_op.insert(enum_opname::IF);
         oneparam_op.insert(enum_opname::IFNO);
 
@@ -191,7 +85,9 @@ namespace share {
             return 1;
         if (opname == enum_opname::PUSH)
             return 2;
-        if (opname == enum_opname::IF || opname == enum_opname::IFNO)
+        if (opname == enum_opname::IF 
+            || opname == enum_opname::IFNO
+            || opname == enum_opname::JMP)
             return 3;
         return 0;
     }
