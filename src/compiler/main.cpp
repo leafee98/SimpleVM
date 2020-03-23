@@ -36,17 +36,21 @@ bool apply_param(int argc, char * args[]) {
             }
         }
     }
-    return true;
+    if (argc <= 1) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 void show_usage() {
     std::cout <<
             "compiler [-d] [-s] <source file> [-t] <target file>\n"
             "\n"
-            "  -h, --help           display this help and exit\n"
-            "  -s, --source         specify the source file\n"
-            "  -t, --target         specify the target file\n"
-            "  -d, --decompile      decompile the target file to source file\n";
+            "    -h, --help         display this help and exit\n"
+            "    -s, --source       specify the source file\n"
+            "    -t, --target       specify the target file\n"
+            "    -d, --decompile    decompile the target file to source file\n";
 }
 
 int main(int argc, char * args[]) {

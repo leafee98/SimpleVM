@@ -1,4 +1,5 @@
 # this program is used to calculate GCD
+# the result is stored in register_b
 
 read
 read

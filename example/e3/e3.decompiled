@@ -1,0 +1,59 @@
+READ
+REGC
+LOADC
+PUSH 1
+REGB
+REGA
+SUB
+IF indentifier_1
+JMP indentifier_2
+:indentifier_1
+PUSH 0
+REGA
+PUSH 1
+REGB
+PUSH 0
+REGC
+JMP indentifier_6
+:indentifier_2
+LOADC
+PUSH 2
+REGB
+REGA
+SUB
+IF indentifier_3
+JMP indentifier_4
+:indentifier_3
+PUSH 1
+REGA
+PUSH 2
+REGB
+PUSH 0
+REGC
+JMP indentifier_6
+:indentifier_4
+LOADC
+REGA
+PUSH 2
+REGB
+SUB
+REGC
+PUSH 1
+REGA
+PUSH 2
+REGB
+:indentifier_5
+ADD
+LOADB
+LOADC
+REGA
+PUSH 1
+REGB
+SUB
+REGC
+REGA
+REGB
+LOADC
+IFP indentifier_5
+:indentifier_6
+HALT

@@ -1,0 +1,93 @@
+# input a postive number *i*, calculate *i*th Fibonacci sequence
+# the result will be stored in register_b
+
+read
+regc
+
+# handle special input like 1 and 2
+# <============================================
+# register_c == 1, display 0/1/0 as result
+loadc
+push 1
+regb
+rega
+sub
+if special_display_1
+jmp check_if_2
+
+:special_display_1
+push 0
+rega
+push 1
+regb
+push 0
+regc
+jmp shutdown
+
+:check_if_2
+
+# register_c == 2, display 1/2/0 as result
+loadc
+push 2
+regb
+rega
+sub
+if special_display_2
+jmp start
+
+:special_display_2
+push 1
+rega
+push 2
+regb
+push 0
+regc
+jmp shutdown
+# end handle special input like 1 and 2
+# ============================================>
+
+
+:start
+
+# register_c -= 2, for the result always show the *i+2*th Fibonacci
+loadc
+rega
+push 2
+regb
+sub
+regc
+# end register_c -= 2
+
+# prepare register_a and register_b
+push 1
+rega
+push 2
+regb
+
+:calc_again
+
+# save the add result and register_b's value to stack,
+# which will be added on next calculation.
+# it should be known that the register_a less than register_b.
+add
+loadb
+
+# register_c -= 1
+loadc
+rega
+push 1
+regb
+sub
+regc
+# end register_c -= 1
+
+# restore value to register_a and register_b from stack
+rega
+regb
+
+# if register_c is not greater than 0, shutdown.
+loadc
+ifp calc_again
+
+:shutdown
+halt

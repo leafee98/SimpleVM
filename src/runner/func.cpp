@@ -1,6 +1,7 @@
 #include "func.h"
 
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -31,11 +32,11 @@ namespace run_param {
 
 void show_usage() {
     std::cout 
-        << "runner <byte code file> [-v]\n"
+        << "runner <byte code file> [-s] [-i] [-h]\n"
         << "\n"
-        << "    --help               show this help text.\n"
-        << "    --show-status        show the status of stack step by step\n"
-        << "    --show-instruction   show the instruction step by step.\n";
+        << "    -h, --help               show this help text.\n"
+        << "    -s, --show-status        show the status of stack step by step\n"
+        << "    -i, --show-instruction   show the instruction step by step.\n";
 }
 
 bool apply_parameter(int argc, char * args[]) {
@@ -43,13 +44,16 @@ bool apply_parameter(int argc, char * args[]) {
         return false;
     
     for (int i = 1; i < argc; ++i) {
-        if (!(runf & run_flag::help) && args[i] == std::string("--help")) {
+        if (!(runf & run_flag::help) && 
+                (!strcmp(args[i], "-h") || !strcmp(args[i],"--help"))) {
             runf |= run_flag::help;
         } else if (!(runf & run_flag::show_stack) 
-                && args[i] == std::string("--show-status")) {
+                && (!strcmp(args[i], "-s")
+                || !strcmp(args[i], "--show-status"))) {
             runf |= run_flag::show_stack;
-        } else if (!(runf & run_flag::show_ins) &&
-                args[i] == std::string("--show-instruction")) {
+        } else if (!(runf & run_flag::show_ins)
+                && (!strcmp(args[i], "-i")
+                || !strcmp(args[i], "--show-instruction"))) {
             runf |= run_flag::show_ins;
         } else {
             if (run_param::byte_code_file.size() == 0)
