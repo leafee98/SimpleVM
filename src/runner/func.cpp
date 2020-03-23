@@ -129,107 +129,152 @@ void run(std::string & err_msg) {
 
 namespace run_ins {
     void ins_nop(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: NOPE\n";
+
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: NOPE\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_halt(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: HALT\n";
+
         err_msg = "shutdown instruction";
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: HALT\n";
         if (runf & run_flag::show_stack)    show_status();
     };
 
     void ins_rega(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: REGA\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         sys::reg_a = sys::stack.back();
         sys::stack.pop_back();
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: REGA\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_regb(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: REGB\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         sys::reg_b = sys::stack.back();
         sys::stack.pop_back();
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: REGB\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_regc(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: REGC\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         sys::reg_c = sys::stack.back();
         sys::stack.pop_back();
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: REGC\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_loada(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: LOADA\n";
+
         sys::stack.push_back(sys::reg_a);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: LOADA\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_loadb(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: LOADB\n";
+
         sys::stack.push_back(sys::reg_b);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: LOADB\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_loadc(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: LOADC\n";
+
         sys::stack.push_back(sys::reg_c);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: LOADC\n";
         if (runf & run_flag::show_stack)    show_status();
     };
 
     void ins_read(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: READ\n";
+
         int32_t opnum;
         std::cout << "Please input opnum: ";
         std::cin >> opnum;
         sys::stack.push_back(opnum);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: READ\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_push(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: PUSH\n";
+
         int32_t opnum;
         opnum = *(int32_t*)(sys::ins_seg.data() + sys::counter + 1);
         sys::stack.push_back(opnum);
         sys::counter += 5;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: PUSH\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_dup(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: DUP\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         sys::stack.push_back(sys::stack.back());
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: DUP\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_pop(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: POP\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         sys::stack.pop_back();
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: POP\n";
         if (runf & run_flag::show_stack)    show_status();
     };
 
     void ins_jmp(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: JMP\n";
+
         uint32_t offset;
         offset = *(int32_t*)(sys::ins_seg.data() + sys::counter + 1);
         sys::counter = offset;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: JMP\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_if(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: IF\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         uint32_t offset;
         offset = *(int32_t*)(sys::ins_seg.data() + sys::counter + 1);
         int32_t opnum = sys::stack.back(); sys::stack.pop_back();
@@ -238,10 +283,16 @@ namespace run_ins {
         else
             sys::counter += 5;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: IF\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_ifno(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: IFNO\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         uint32_t offset;
         offset = *(int32_t*)(sys::ins_seg.data() + sys::counter + 1);
         int32_t opnum = sys::stack.back(); sys::stack.pop_back();
@@ -250,10 +301,16 @@ namespace run_ins {
         else
             sys::counter += 5;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: IFNO\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_ifp(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: IFP\n";
+
+        if (sys::stack.size() <= 0) {
+            err_msg = "load data from empty stack.";
+            return;
+        }
+
         uint32_t offset;
         offset = *(int32_t*)(sys::ins_seg.data() + sys::counter + 1);
         int32_t opnum = sys::stack.back(); sys::stack.pop_back();
@@ -262,43 +319,47 @@ namespace run_ins {
         else
             sys::counter += 5;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: IFP\n";
         if (runf & run_flag::show_stack)    show_status();
     }
 
     void ins_add(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: ADD\n";
+
         sys::stack.push_back(sys::reg_a + sys::reg_b);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: ADD\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_sub(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: SUB\n";
+
         sys::stack.push_back(sys::reg_a - sys::reg_b);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: SUB\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_multi(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: MULTI\n";
+
         sys::stack.push_back(sys::reg_a * sys::reg_b);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: MULTI\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_div(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: DIV\n";
+
         sys::stack.push_back(sys::reg_a / sys::reg_b);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: DIV\n";
         if (runf & run_flag::show_stack)    show_status();
     };
     void ins_mod(std::string & err_msg) {
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: MOD\n";
+
         sys::stack.push_back(sys::reg_a % sys::reg_b);
         sys::counter += 1;
 
-        if (runf & run_flag::show_ins)      std::cout << "Instruction: MOD\n";
         if (runf & run_flag::show_stack)    show_status();
     };
 }
