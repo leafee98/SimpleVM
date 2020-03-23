@@ -227,11 +227,8 @@ namespace compiler {
         // take NOP aside, treat it as identifier
         // record all identifier here
         for (unsigned ins_cnt = 0; fin.read((char*)&ins_bit, 1); ++ins_cnt) {
-            std::cout << "Debug: instruction_bit found: " << std::hex << (unsigned)ins_bit << '\n';
-            std::cout << "Debug: instruction is: " << bitdef::getopname(ins_bit) << '\n';
             if (ins_bit == share::enum_bit::NOP) {
                 pos_ident[pro_cnt] = ident_prefix + std::to_string(ident_cnt);
-                std::cout << "Debug: found identifier: " << pos_ident[pro_cnt] << ", position = " << pro_cnt << '\n';
                 ++ident_cnt;
                 ++pro_cnt;
             } else if (bitdef::validate_opname(bitdef::getopname(ins_bit)) == 1) {
