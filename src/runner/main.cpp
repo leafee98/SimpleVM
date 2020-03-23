@@ -18,7 +18,7 @@ int main(int argc, char * args[]) {
     }
 
     long filesize = get_filesize(run_param::byte_code_file);
-    sys::ins_seg.reserve(filesize);
+    sys::ins_seg.resize(filesize);
     std::ifstream program_file(run_param::byte_code_file,
             std::ios::in | std::ios::binary);
     program_file.read((char*)sys::ins_seg.data(), filesize);

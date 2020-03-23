@@ -43,17 +43,20 @@ bool apply_parameter(int argc, char * args[]) {
         return false;
     
     for (int i = 1; i < argc; ++i) {
-        if ((! runf & run_flag::help) && args[i] == std::string("--help")) {
+        if (!(runf & run_flag::help) && args[i] == std::string("--help")) {
             runf |= run_flag::help;
-        } else if ((! runf & run_flag::show_stack) 
+        } else if (!(runf & run_flag::show_stack) 
                 && args[i] == std::string("--show-status")) {
             runf |= run_flag::show_stack;
-        } else if ((! runf & run_flag::show_ins) &&
+        } else if (!(runf & run_flag::show_ins) &&
                 args[i] == std::string("--show-instruction")) {
             runf |= run_flag::show_ins;
         } else {
             if (run_param::byte_code_file.size() == 0)
                 run_param::byte_code_file = args[i];
+            else {
+                return false;
+            }
         }
     }
 
