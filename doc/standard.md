@@ -35,6 +35,7 @@ POP
 JMP
 IF <identifier>
 IFNO <identifier>
+IFP <identifier>
 
 // arithmetic operation
 ADD
@@ -103,11 +104,13 @@ POP         => 0000: 27
 - `JMP` jump to `<identifier>`.
 - `IF` jump to `<identifier>` if the top of stack **equal to zero**.
 - `IF` jump to `<identifier>` if the top of stack **not equal to zero**.
+- `IFP` jump to `<identifier>` if the top of stack **bigger than zero**.
 
 ```
 JMP     => 0x30
 IF      => 0x31
 IFNO    => 0x32
+IFP     => 0x33
 ```
 
 ```
@@ -115,9 +118,10 @@ ident:
 ...
 
 # suppose the ident's offset of program is 0x78563412
-JMP             => 0000: 30 12 34 56 78
+JMP ident       => 0000: 30 12 34 56 78
 IF ident        => 0000: 31 12 34 56 78
 IFNO ident      => 0000: 32 12 34 56 78
+IFP ident       => 0000: 33 12 34 56 78
 ```
 
 ### arithmetic operation

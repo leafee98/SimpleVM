@@ -109,6 +109,7 @@ void run(std::string & err_msg) {
             case share::enum_bit::JMP:      ins_jmp(err_msg);      break;
             case share::enum_bit::IF:       ins_if(err_msg);       break;
             case share::enum_bit::IFNO:     ins_ifno(err_msg);     break;
+            case share::enum_bit::IFP:      ins_ifp(err_msg);     break;
             
             case share::enum_bit::ADD:      ins_add(err_msg);      break;
             case share::enum_bit::SUB:      ins_sub(err_msg);      break;
@@ -252,6 +253,18 @@ namespace run_ins {
         if (runf & run_flag::show_ins)      std::cout << "Instruction: IFNO\n";
         if (runf & run_flag::show_stack)    show_status();
     };
+    void ins_ifp(std::string & err_msg) {
+        uint32_t offset;
+        offset = *(int32_t*)(sys::ins_seg.data() + sys::counter + 1);
+        int32_t opnum = sys::stack.back(); sys::stack.pop_back();
+        if (opnum > 0)
+            sys::counter = offset;
+        else
+            sys::counter += 5;
+
+        if (runf & run_flag::show_ins)      std::cout << "Instruction: IFP\n";
+        if (runf & run_flag::show_stack)    show_status();
+    }
 
     void ins_add(std::string & err_msg) {
         sys::stack.push_back(sys::reg_a + sys::reg_b);

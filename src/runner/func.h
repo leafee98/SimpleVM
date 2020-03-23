@@ -54,6 +54,7 @@ namespace run_ins {
     void ins_jmp(std::string & err_msg);
     void ins_if(std::string & err_msg);
     void ins_ifno(std::string & err_msg);
+    void ins_ifp(std::string & err_msg);
 
     void ins_add(std::string & err_msg);
     void ins_sub(std::string & err_msg);

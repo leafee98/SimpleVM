@@ -30,39 +30,13 @@ namespace share {
             inline static const uint8_t JMP       = 0x30;
             inline static const uint8_t IF        = 0x31;
             inline static const uint8_t IFNO      = 0x32;
+            inline static const uint8_t IFP       = 0x33;
 
             inline static const uint8_t ADD       = 0x40;
             inline static const uint8_t SUB       = 0x41;
             inline static const uint8_t MULTI     = 0x42;
             inline static const uint8_t DIV       = 0x43;
             inline static const uint8_t MOD       = 0x44;
-
-            // static const uint8_t NOP       ;
-            // static const uint8_t HALT      ;
-
-            // static const uint8_t REGA      ;
-            // static const uint8_t REGB      ;
-            // static const uint8_t REGC      ;
-
-            // static const uint8_t LOADA     ;
-            // static const uint8_t LOADB     ;
-            // static const uint8_t LOADC     ;
-
-            // static const uint8_t READ      ;
-            // static const uint8_t PUSH      ;
-            // static const uint8_t DUP       ;
-            // static const uint8_t POP       ;
-
-            // static const uint8_t IF        ;
-            // static const uint8_t IFNO      ;
-
-            // static const uint8_t ADD       ;
-            // static const uint8_t SUB       ;
-            // static const uint8_t MULTI     ;
-            // static const uint8_t DIV       ;
-            // static const uint8_t MOD       ;
-
-            // static void init();
     };
 
     class enum_opname {
@@ -86,39 +60,13 @@ namespace share {
             inline static const std::string JMP       = "JMP";
             inline static const std::string IF        = "IF";
             inline static const std::string IFNO      = "IFNO";
+            inline static const std::string IFP       = "IFP";
 
             inline static const std::string ADD       = "ADD";
             inline static const std::string SUB       = "SUB";
             inline static const std::string MULTI     = "MULTI";
             inline static const std::string DIV       = "DIV";
             inline static const std::string MOD       = "MOD";
-
-            // static const std::string NOP;
-            // static const std::string HALT;
-
-            // static const std::string REGA;
-            // static const std::string REGB;
-            // static const std::string REGC;
-
-            // static const std::string LOADA;
-            // static const std::string LOADB;
-            // static const std::string LOADC;
-
-            // static const std::string READ;
-            // static const std::string PUSH;
-            // static const std::string DUP;
-            // static const std::string POP;
-
-            // static const std::string IF;
-            // static const std::string IFNO;
-
-            // static const std::string ADD;
-            // static const std::string SUB;
-            // static const std::string MULTI;
-            // static const std::string DIV;
-            // static const std::string MOD;  
-
-            // static void init();
     };
 
     class bitdef {

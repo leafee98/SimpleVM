@@ -32,6 +32,7 @@ namespace share {
         bit[enum_opname::JMP]   = enum_bit::JMP;
         bit[enum_opname::IF]    = enum_bit::IF;
         bit[enum_opname::IFNO ] = enum_bit::IFNO;
+        bit[enum_opname::IFP]   = enum_bit::IFP;
 
         bit[enum_opname::ADD]   = enum_bit::ADD;
         bit[enum_opname::SUB]   = enum_bit::SUB;
@@ -58,6 +59,7 @@ namespace share {
         oneparam_op.insert(enum_opname::JMP);
         oneparam_op.insert(enum_opname::IF);
         oneparam_op.insert(enum_opname::IFNO);
+        oneparam_op.insert(enum_opname::IFP);
 
         noparam_op.insert(enum_opname::ADD);
         noparam_op.insert(enum_opname::SUB);
@@ -87,6 +89,7 @@ namespace share {
             return 2;
         if (opname == enum_opname::IF 
             || opname == enum_opname::IFNO
+            || opname == enum_opname::IFP
             || opname == enum_opname::JMP)
             return 3;
         return 0;
